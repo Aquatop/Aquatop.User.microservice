@@ -32,4 +32,8 @@ UserSchema.methods.checkPassword = async function(password) {
   return bcrypt.compare(password, this.password);
 };
 
+UserSchema.methods.toJSON = function() {
+  return { id: this.id, name: this.name, email: this.email };
+};
+
 export default mongoose.model('User', UserSchema);
