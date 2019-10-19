@@ -22,8 +22,10 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.pre('save', async function(next) {
-  const hash = await bcrypt.hash(this.password, 8);
-  this.password = hash;
+  if (this.password.length <= 20) {
+    const hash = await bcrypt.hash(this.password, 8);
+    this.password = hash;
+  }
 
   next();
 });
